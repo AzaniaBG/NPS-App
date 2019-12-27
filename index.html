@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <title>Checkpoint 7 Assignment</title>
+</head>
+<body>
+    <header role="header">
+        <h1>National Parks</h1>
+    </header>
+    <form role="form">
+        <fieldset>
+            <legend>Search for Parks</legend>
+            <label for="input-values">Search</label>
+            <input role="" type="text" id="input-values" value="" placeholder="enter serch terms">
+            <label for="max-values">Max Results</label>
+            <input role="" type="text" id="max-values" value="10" placeholder="enter number">
+            <button type="submit">Go!</button>
+        </fieldset>
+    </form>
+    <section role="" id="js-results" class="hidden">
+        <h2 role="header"> Results: </h2>
+        <ul role="" id="js-results-list">
+            <li role="" id="js-full-name">Name:</li>
+            <li role="" id="js-description">Description:</li>
+            <li role="" id="js-site-url">Website:</li>
+        </ul>
+        <h2 role="header">Error</h2>
+            <p role="" id="js-error-message"></p>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
