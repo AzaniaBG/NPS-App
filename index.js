@@ -10,6 +10,23 @@ function formatParameters(params) {
     return queryItems.join("&");
 
 }
+//Loop through returned JSON object and display relevant data in the DOM
+function displayParkInfo(responseJson) {
+    $("#js-results-list").empty();
+console.log(`responseJson is:`);
+console.log(responseJson);
+    let dataArr = responseJson.data;//data is an array of objects
+    for(let i = 0; i < dataArr.length; i++) {
+        let dataItemName = dataArr[i].fullName;
+        let itemDirections = dataArr[i].directionsUrl;
+        let dataItemDescrip = dataArr[i].description;
+        let dataItemURL = dataArr[i].url;
+        $("#js-results-list").append(`<li role="" id="js-results-info"><h3>${dataItemName} <a href="${dataItemURL}"> ${dataItemURL}</a></h3></li>
+        <p>${dataItemDescrip}<br><a href="${itemDirections}"> Get Directions</a>`);
+    }
+    $("#js-results").removeClass("hidden");
+}
+
 //GET parks info w/ request to NPS API
 function getParksInfo(search, maxResults) {
 //create an HTTP header object to store the API key in
@@ -29,12 +46,16 @@ function getParksInfo(search, maxResults) {
 console.log(`url is ${url}`);
     fetch(url).then(response => {
         if(response.ok) {
+    // console.log(`response.json returns:`);
+    // console.log(response.json())
             return response.json();
         }
         throw new Error(response.statusText);
-    }).then(responseJson =>console.log(responseJson)).catch(err=> {
-        $("#js-error-message").text(`OOPSIE POOPSIE! ${err.message}`);
-    })
+    }).then(responseJson =>displayParkInfo(responseJson)).catch(err=> {
+        $("h2").append(`<p>OOPSIE POOPSIE! ${err.message}<p>`);
+        $("#js-error-message").removeClass("hidden");
+    });
+    
 }
 
 //when input submitted on form, get input values and store them in a variable; pass them to the GET function

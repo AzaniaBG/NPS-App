@@ -9,11 +9,11 @@
 </head>
 <body>
     <header role="header">
-        <h1>National Parks</h1>
+        <h1>Visit a National Park!</h1>
     </header>
     <form role="form">
-        <fieldset>
-            <legend>Search for Parks</legend>
+        <fieldset role="" id="input">
+            <legend><h4>Search for Parks</h4></legend>
             <label for="input-values">Search</label>
             <input role="" type="text" id="input-values" value="" placeholder="enter serch terms">
             <label for="max-values">Max Results</label>
@@ -22,14 +22,11 @@
         </fieldset>
     </form>
     <section role="" id="js-results" class="hidden">
-        <h2 role="header"> Results: </h2>
         <ul role="" id="js-results-list">
-            <li role="" id="js-full-name">Name:</li>
-            <li role="" id="js-description">Description:</li>
-            <li role="" id="js-site-url">Website:</li>
         </ul>
-        <h2 role="header">Error</h2>
-            <p role="" id="js-error-message"></p>
+    </section>
+    <section role="" id="js-error-message" class="hidden">
+            <h2 role="header">Error</h2>
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
