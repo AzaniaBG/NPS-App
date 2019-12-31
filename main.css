@@ -1,6 +1,10 @@
 .hidden {
     display: none;
 }
+.error {
+    padding: 10px;
+    color: red;
+}
 #input {
     position: relative;
     

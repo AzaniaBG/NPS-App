@@ -16,6 +16,9 @@ function displayParkInfo(responseJson) {
 console.log(`responseJson is:`);
 console.log(responseJson);
     let dataArr = responseJson.data;//data is an array of objects
+    if(dataArr.length < 1) {
+        $("h2").append(`<p class="error">No items found. Please check the state spelling and try again.<p>`);
+    }
     for(let i = 0; i < dataArr.length; i++) {
         let dataItemName = dataArr[i].fullName;
         let itemDirections = dataArr[i].directionsUrl;
@@ -68,8 +71,7 @@ function getStateInfo(singleSearch, maxResults) {
 console.log(`url is ${url}`);
     fetch(url).then(response => {
         if(response.ok) {
-    // console.log(`response.json returns:`);
-    // console.log(response.json())
+    
             return response.json();
         }
         throw new Error(response.statusText);
@@ -92,21 +94,12 @@ console.log(`searchInput is ${searchInput}`);
         getStateInfo(searchInput, maxInput);
     });
 
-//     $("form").submit("#input-values", event => {
-//         event.preventDefault();
-//         let searchInput = $("#input-values").val();
-//         let maxInput = $("#max-values").val();
-// console.log(`searchInput is ${searchInput}`);
-//         getMultiStateParks(searchInput, maxInput);
-//     })
-
 }
 
 //when input submitted on form, get input values and store them in a variable; pass them to the GET function
 function watchForm() {
     getInputValues();
-    // getStateInfo(searchInput, maxInput);
-    // getMultiStateParks(searchInput, maxInput)
+  
       
 }
 //once page loads, call watchForm functon
