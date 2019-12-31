@@ -8,10 +8,15 @@
 .input {
     position: absolute;
     top: 10px;
-    padding-bottom: 15px;
+   
+    padding-bottom: 25px;
     margin-bottom: 15px;
 }
-#input-values, #max-values {
+select {
+    width: 25%;
+
+}
+#max-values {
     margin-top: 50px;  
 }
 #js-results-list {
