@@ -13,6 +13,7 @@ function formatParameters(params) {
 //Loop through returned JSON object and display relevant data in the DOM
 function displayParkInfo(responseJson) {
     $("#js-results-list").empty();
+    $(".error").empty();
 console.log(`responseJson is:`);
 console.log(responseJson);
     let dataArr = responseJson.data;//data is an array of objects
