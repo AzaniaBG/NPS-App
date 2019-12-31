@@ -1,11 +1,11 @@
 .hidden {
     display: none;
 }
-fieldset {
+#input {
     position: relative;
     
 }
-legend {
+.input {
     position: absolute;
     top: 10px;
     padding-bottom: 15px;
@@ -17,3 +17,4 @@ legend {
 #js-results-list {
     list-style-type: none;
 }
+

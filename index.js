@@ -6,9 +6,8 @@ const endpointURL = "https://developer.nps.gov/api/v1/parks";
  
 //format parms object into a propery query string
 function formatParameters(params) {
-    const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${params[key]}`);
     return queryItems.join("&");
-
 }
 //Loop through returned JSON object and display relevant data in the DOM
 function displayParkInfo(responseJson) {
@@ -28,17 +27,13 @@ console.log(responseJson);
 }
 
 //GET parks info w/ request to NPS API
-function getParksInfo(search, maxResults) {
-//create an HTTP header object to store the API key in
-    // const options = {
-    //     headers: new Headers({
-    //         "X-Api-Key": apiKey })
-    // };
+function getParksInfo(singleSearch, multSearch, maxResults) {
 //create an object to store search parameters
     const params = {
         api_key: apiKey,
         limit: maxResults,
-        q: search,
+        q: singleSearch,
+        stateCode: multSearch,
     }
 
     let queryString = formatParameters(params);
@@ -57,18 +52,26 @@ console.log(`url is ${url}`);
     });
     
 }
-
-//when input submitted on form, get input values and store them in a variable; pass them to the GET function
-function watchForm() {
+function getInputValues() {
     $("form").submit(event => {
         event.preventDefault();
         let searchInput = $("#input-values").val();
+        let multSearchInput; 
 console.log(`searchInput is ${searchInput}`);
         let maxInput = $("#max-values").val();
 console.log(`maxInput is ${maxInput}`);
-    getParksInfo(searchInput, maxInput);
+        if(searchInput.includes(",")) {
+            multSearchInput = searchInput.split(",");
+console.log(`multSearchInput is ${multSearchInput}`)
+        }
+        getParksInfo(searchInput, multSearchInput, maxInput);
     });
-    
+}
+
+//when input submitted on form, get input values and store them in a variable; pass them to the GET function
+function watchForm() {
+    getInputValues();
+      
 }
 //once page loads, call watchForm functon
 $(watchForm)
