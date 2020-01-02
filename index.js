@@ -7,6 +7,11 @@ const endpointURL = "https://developer.nps.gov/api/v1/parks";
 //format parms object into a propery query string
 
 function formatParameters(params) { 
+    const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    return queryItems.join("&");
+}
+
+function formatMultParameters(params) { 
     const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${params[key]}`);
     return queryItems.join("&");
 }
@@ -30,26 +35,33 @@ console.log(responseJson);
     }
     $("#js-results").removeClass("hidden");
 }
-function displayMultiParksInfo(responseJson) {
-    let dataArr = responseJson.data;
-    let multipleStates = dataArr[0]["states"];
-console.log(`multipleStates is ${multipleStates}`)
 
+function displayMultiParksInfo(responseJson) {
+    let dataArr = responseJson.data;//data is an array of objects
+    if(dataArr.length < 1) {
+        $("h2").append(`<p class="error">No items found. Please check the state spelling and try again.<p>`);
+    }
+    for(let i = 0; i < dataArr.length; i++) {
+        let dataItemName = dataArr[i].fullName;
+        let itemDirections = dataArr[i].directionsUrl;
+        let dataItemDescrip = dataArr[i].description;
+        let dataItemURL = dataArr[i].url;
+        $("#js-results-list").append(`<li role="" id="js-results-info"><h3>${dataItemName} <a href="${dataItemURL}"> ${dataItemURL}</a></h3></li>
+        <p>${dataItemDescrip}<br><a href="${itemDirections}"> Get Directions</a>`);
+    }
+    $("#js-results").removeClass("hidden");
 }
-// function formatParameters(params) { 
-//     const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
-//     return queryItems.join("&");
-// }
 
 function getMultiStateParks(multiSearch, maxResults) {
 
     const params = {
         api_key: apiKey,
         limit: maxResults,
+        stateCode:multiSearch,
     }
-    //let search = `stateCode=${multiSearch}`
-    let queryString = formatParameters(params);
-    let url = endpointURL+"?"+queryString+`&stateCode=${multiSearch}`;
+
+    let queryString = formatMultParameters(params);
+    let url = endpointURL+"?"+queryString;
 console.log(`url is ${url}`)
     fetch(url).then(response => {
         if(response.ok) {
@@ -71,7 +83,7 @@ function getStateInfo(singleSearch, maxResults) {
     const params = {
         api_key: apiKey,
         limit: maxResults,
-        stateCode: singleSearch,
+        q: singleSearch,
     }
     let queryString = formatParameters(params);
     let url = endpointURL+"?"+queryString;
@@ -95,15 +107,12 @@ function getInputValues() {
         let maxInput = $("#max-values").val();
         if(searchInput.includes(",")) {
             searchInput = `${searchInput}`
-console.log(`searchInput is ${searchInput}`)
-//console.log(typeof(searchInput));
-        getStateInfo(searchInput, maxInput);
-            //getMultiStateParks(searchInput, maxInput);
-//console.log(`searchInput is ${searchInput}`)
+            getMultiStateParks(searchInput, maxInput);
+            
+        } else {
+            getStateInfo(searchInput, maxInput);
         }
-//console.log(`searchInput is ${searchInput}`);
-        
-        getStateInfo(searchInput, maxInput);
+            
     });
 
 }
