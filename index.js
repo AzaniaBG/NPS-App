@@ -7,7 +7,7 @@ const endpointURL = "https://developer.nps.gov/api/v1/parks";
 //format parms object into a propery query string
 
 function formatParameters(params) { 
-    const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${params[key]}`);
     return queryItems.join("&");
 }
 //Loop through returned JSON object and display relevant data in the DOM
@@ -34,17 +34,23 @@ function displayMultiParksInfo(responseJson) {
     let dataArr = responseJson.data;
     let multipleStates = dataArr[0]["states"];
 console.log(`multipleStates is ${multipleStates}`)
+
 }
+// function formatParameters(params) { 
+//     const queryItems = Object.keys(params).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+//     return queryItems.join("&");
+// }
 
 function getMultiStateParks(multiSearch, maxResults) {
+
     const params = {
         api_key: apiKey,
         limit: maxResults,
     }
-    let search = `stateCode=${multiSearch}`
+    //let search = `stateCode=${multiSearch}`
     let queryString = formatParameters(params);
-    let url = endpointURL+"?"+queryString+search;
-//console.log(`url is ${url}`)
+    let url = endpointURL+"?"+queryString+`&stateCode=${multiSearch}`;
+console.log(`url is ${url}`)
     fetch(url).then(response => {
         if(response.ok) {
             return response.json();
@@ -88,9 +94,14 @@ function getInputValues() {
         let searchInput = $("#input-value").val();
         let maxInput = $("#max-values").val();
         if(searchInput.includes(",")) {
-            getMultiStateParks(searchInput, maxInput);
+            searchInput = `${searchInput}`
+console.log(`searchInput is ${searchInput}`)
+//console.log(typeof(searchInput));
+        getStateInfo(searchInput, maxInput);
+            //getMultiStateParks(searchInput, maxInput);
+//console.log(`searchInput is ${searchInput}`)
         }
-console.log(`searchInput is ${searchInput}`);
+//console.log(`searchInput is ${searchInput}`);
         
         getStateInfo(searchInput, maxInput);
     });
