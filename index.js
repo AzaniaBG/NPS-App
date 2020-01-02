@@ -23,7 +23,7 @@ console.log(`responseJson is:`);
 console.log(responseJson);
     let dataArr = responseJson.data;//data is an array of objects
     if(dataArr.length < 1) {
-        $("h2").append(`<p class="error">No items found. Please check the state spelling and try again.<p>`);
+        $("h2").append(`<p class="error">No items found. To search multiple states, use state abbreviations separated by commas, e.g., "CA,CO".<p>`);
     }
     for(let i = 0; i < dataArr.length; i++) {
         let dataItemName = dataArr[i].fullName;
@@ -37,9 +37,11 @@ console.log(responseJson);
 }
 
 function displayMultiParksInfo(responseJson) {
+    $("#js-results-list").empty();
+    $(".error").empty();
     let dataArr = responseJson.data;//data is an array of objects
     if(dataArr.length < 1) {
-        $("h2").append(`<p class="error">No items found. Please check the state spelling and try again.<p>`);
+        $("h2").append(`<p class="error">No items found. To search multiple states, use state abbreviations separated by commas, e.g., "ca,co"<p>`);
     }
     for(let i = 0; i < dataArr.length; i++) {
         let dataItemName = dataArr[i].fullName;
