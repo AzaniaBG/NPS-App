@@ -14,19 +14,9 @@
     <form role="form">
         <fieldset role="" id="input">
             <legend class="input"><h2>Search for Parks...</h2></legend>
-            <label for="input-value"><b>In One State:</b></label>
+            <label for="input-value"><b>To search multiple states, separate each state abbreviation with a comma.</b></label>
             <input id="input-value">
-            <label for="input-values"><b>In Multiple States:</b></label>
-            <select role="" type="submit" id="input-values" name="state"> 
-                <option id="multi-state-none" value="">
-                        NONE</option>
-                <option id="multi-state0" value="CA,CO,ID,KS,MO,NE,NV,OR,UT,WY">
-                    CA, CO, ID, KS, MO, NE, NV, OR, UT, WY</option>
-                <option id="multi-state4" value="AZ,CA,CO,NV,NM,UT">
-                    AZ, CA, CO, NV, NM, UT</option>
-                <option id="multi-state6" value="CA,CO,KS,MO,NE,NV,UT,WY">
-                    CA, CO, KS, MO, NE, NV, UT, WY</option>
-            </select>
+            
             <label for="max-values"><b>Max Results</b></label>
             <input role="" type="text" id="max-values" value="10" placeholder="enter number">
             <button type="submit">Go!</button>
