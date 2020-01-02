@@ -71,7 +71,7 @@ function getStateInfo(singleSearch, maxResults) {
     const params = {
         api_key: apiKey,
         limit: maxResults,
-        q: singleSearch,
+        stateCode: singleSearch,
     }
     let queryString = formatParameters(params);
     let url = endpointURL+"?"+queryString;
